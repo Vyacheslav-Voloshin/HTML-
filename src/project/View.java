@@ -1,8 +1,10 @@
 package project;
 
 import project.Controller;
+import project.listeners.FrameListener;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +30,12 @@ public class View extends JFrame implements ActionListener {
         this.controller = controller;
     }
 
-    public void init(){}
+    public void init(){
+        initGui();
+        FrameListener frameListener = new FrameListener(this);
+        addWindowListener(frameListener);
+        this.setVisible(true);
+    }
 
     public void exit(){
         controller.exit();
