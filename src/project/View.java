@@ -38,4 +38,18 @@ public class View extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
+//Метод  відповідає  за ініціалізацію меню
+    public void initMenuBar(){
+
+    }
+//Метод  відповідає  за ініціалізацію панелі редактора
+    public void initEditor(){
+
+    }
+////Метод  відповідає  за ініціалізацію графічного интерфейсу
+    public void initGui(){
+        initMenuBar();
+        initEditor();
+        pack();
+    }
 }
