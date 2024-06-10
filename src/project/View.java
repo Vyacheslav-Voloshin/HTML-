@@ -16,9 +16,9 @@ public class View extends JFrame implements ActionListener {
 
     private Controller controller;
 
-    private  JTabbedPane tabbedPane; //це буде панель з двома вкладками
-    private JTextPane htmlTextPane; //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
-    private JEditorPane plainTextPane; //це буде компонент для редагування HTML у вигляді тексту,він відображатиме код html (теги та їх вміст).
+    private  JTabbedPane tabbedPane = new JTabbedPane(); //це буде панель з двома вкладками
+    private JTextPane htmlTextPane =new JTextPane(); //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
+    private JEditorPane plainTextPane = new JEditorPane(); //це буде компонент для редагування HTML у вигляді тексту,він відображатиме код html (теги та їх вміст).
 
     public Controller getController() {
         return controller;
