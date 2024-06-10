@@ -1,3 +1,5 @@
+package project;
+
 import javax.swing.text.html.HTMLDocument;
 import java.io.File;
 
