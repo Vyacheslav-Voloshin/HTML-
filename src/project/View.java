@@ -2,6 +2,7 @@ package project;
 
 import project.Controller;
 import project.listeners.FrameListener;
+import project.listeners.TabbedPaneChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,15 @@ public class View extends JFrame implements ActionListener {
     }
 //Метод  відповідає  за ініціалізацію панелі редактора
     public void initEditor(){
-
+        htmlTextPane.setContentType("text/html"); //встановити значення "text/html" в якості типа контента для компонента htmlTextPane.
+        JScrollPane htmlScrollPane = new JScrollPane(htmlTextPane); //Створити новий локальный компонент JScrollPane на базі htmlTextPane
+        tabbedPane.addTab("HTML",htmlScrollPane); //Додавати вкладку в панель tabbedPane з іменем "HTML" і компонентом з попереднього  пункту.
+        JScrollPane plainScrollPane = new JScrollPane(plainTextPane); // Створити новий локальный компонент JScrollPane на базі  plainTextPane
+        tabbedPane.addTab("Текст", plainScrollPane); //Додавати вкладку в панель tabbedPane з іменем "Текст" і компонентом з попереднього  пункту.
+        tabbedPane.setPreferredSize(new Dimension(300, 300));//Встановлюємо необхідний  розмір панелі tabbedPane.
+        TabbedPaneChangeListener listener = new TabbedPaneChangeListener(this);
+        tabbedPane.addChangeListener(listener); //для компоненту tabbedPane повинен додаватися слухач TabbedPaneChangeListener через метод addChangeListener
+        getContentPane().add(tabbedPane,BorderLayout.CENTER);
     }
 ////Метод  відповідає  за ініціалізацію графічного интерфейсу
     public void initGui(){
