@@ -23,6 +23,14 @@ public class View extends JFrame implements ActionListener {
     private JTextPane htmlTextPane =new JTextPane(); //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
     private JEditorPane plainTextPane = new JEditorPane(); //це буде компонент для редагування HTML у вигляді тексту,він відображатиме код html (теги та їх вміст).
 
+    public View(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+                ExceptionHandler.log(e);
+            }
+    }
+
     public Controller getController() {
         return controller;
     }
@@ -48,6 +56,15 @@ public class View extends JFrame implements ActionListener {
     }
 //Метод  відповідає  за ініціалізацію меню
     public void initMenuBar(){
+        JMenuBar jMenuBar = new JMenuBar();
+        MenuHelper.initFileMenu(this,jMenuBar);
+        MenuHelper. initEditMenu(this,jMenuBar);
+        MenuHelper.initStyleMenu(this,jMenuBar);
+        MenuHelper.initAlignMenu(this,jMenuBar);
+        MenuHelper.initColorMenu(this,jMenuBar);
+        MenuHelper.initFontMenu(this,jMenuBar);
+        MenuHelper.initHelpMenu(this,jMenuBar);
+        getContentPane().add(jMenuBar,BorderLayout.NORTH);
 
     }
 //Метод  відповідає  за ініціалізацію панелі редактора
