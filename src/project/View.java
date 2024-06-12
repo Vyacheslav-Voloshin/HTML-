@@ -3,8 +3,12 @@ package project;
 import project.Controller;
 import project.listeners.FrameListener;
 import project.listeners.TabbedPaneChangeListener;
+import project.listeners.UndoListener;
 
 import javax.swing.*;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +26,10 @@ public class View extends JFrame implements ActionListener {
     private  JTabbedPane tabbedPane = new JTabbedPane(); //це буде панель з двома вкладками
     private JTextPane htmlTextPane =new JTextPane(); //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
     private JEditorPane plainTextPane = new JEditorPane(); //це буде компонент для редагування HTML у вигляді тексту,він відображатиме код html (теги та їх вміст).
+
+    private UndoManager undoManager = new UndoManager();
+
+    private UndoListener undoListener = new UndoListener(undoManager);
 
     public View(){
         try {
@@ -91,10 +99,34 @@ public class View extends JFrame implements ActionListener {
     }
 
     public boolean canUndo(){
-        return false;
+        return undoManager.canUndo();
     }
 
     public boolean canRedo(){
-        return false;
+        return undoManager.canRedo();
+    }
+//Метод скасовує останню дію. Реалізуй його за допомогою undoManager. Метод не повинен кидати виняток, логіруй їх.
+    public void  undo(){
+        try {
+            undoManager.undo();
+        } catch (CannotUndoException e){
+            ExceptionHandler.log(e);
+        }
+    }
+//Метод повертає раніше скасовану дію.
+    public void redo(){
+        try {
+            undoManager.redo();
+        } catch (CannotRedoException e){
+            ExceptionHandler.log(e);
+        }
+    }
+//Метод, який повинен скидати всі правки в менеджері undoManager.
+    public void  resetUndo(){
+      undoManager.discardAllEdits();
+    }
+//геттер до поля undoListener
+    public UndoListener getUndoListener() {
+        return undoListener;
     }
 }
