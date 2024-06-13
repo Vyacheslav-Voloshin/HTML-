@@ -23,20 +23,20 @@ public class View extends JFrame implements ActionListener {
 
     private Controller controller;
 
-    private  JTabbedPane tabbedPane = new JTabbedPane(); //це буде панель з двома вкладками
-    private JTextPane htmlTextPane =new JTextPane(); //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
+    private JTabbedPane tabbedPane = new JTabbedPane(); //це буде панель з двома вкладками
+    private JTextPane htmlTextPane = new JTextPane(); //це буде компонент для візуального редактування html Він буде розміщений на першій вкладці.
     private JEditorPane plainTextPane = new JEditorPane(); //це буде компонент для редагування HTML у вигляді тексту,він відображатиме код html (теги та їх вміст).
 
     private UndoManager undoManager = new UndoManager();
 
     private UndoListener undoListener = new UndoListener(undoManager);
 
-    public View(){
+    public View() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-                ExceptionHandler.log(e);
-            }
+            ExceptionHandler.log(e);
+        }
     }
 
     public Controller getController() {
@@ -47,14 +47,14 @@ public class View extends JFrame implements ActionListener {
         this.controller = controller;
     }
 
-    public void init(){
+    public void init() {
         initGui();
         FrameListener frameListener = new FrameListener(this);
         addWindowListener(frameListener);
         this.setVisible(true);
     }
 
-    public void exit(){
+    public void exit() {
         controller.exit();
     }
 
@@ -62,33 +62,36 @@ public class View extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
-//Метод  відповідає  за ініціалізацію меню
-    public void initMenuBar(){
+
+    //Метод  відповідає  за ініціалізацію меню
+    public void initMenuBar() {
         JMenuBar jMenuBar = new JMenuBar();
-        MenuHelper.initFileMenu(this,jMenuBar);
-        MenuHelper. initEditMenu(this,jMenuBar);
-        MenuHelper.initStyleMenu(this,jMenuBar);
-        MenuHelper.initAlignMenu(this,jMenuBar);
-        MenuHelper.initColorMenu(this,jMenuBar);
-        MenuHelper.initFontMenu(this,jMenuBar);
-        MenuHelper.initHelpMenu(this,jMenuBar);
-        getContentPane().add(jMenuBar,BorderLayout.NORTH);
+        MenuHelper.initFileMenu(this, jMenuBar);
+        MenuHelper.initEditMenu(this, jMenuBar);
+        MenuHelper.initStyleMenu(this, jMenuBar);
+        MenuHelper.initAlignMenu(this, jMenuBar);
+        MenuHelper.initColorMenu(this, jMenuBar);
+        MenuHelper.initFontMenu(this, jMenuBar);
+        MenuHelper.initHelpMenu(this, jMenuBar);
+        getContentPane().add(jMenuBar, BorderLayout.NORTH);
 
     }
-//Метод  відповідає  за ініціалізацію панелі редактора
-    public void initEditor(){
+
+    //Метод  відповідає  за ініціалізацію панелі редактора
+    public void initEditor() {
         htmlTextPane.setContentType("text/html"); //встановити значення "text/html" в якості типа контента для компонента htmlTextPane.
         JScrollPane htmlScrollPane = new JScrollPane(htmlTextPane); //Створити новий локальный компонент JScrollPane на базі htmlTextPane
-        tabbedPane.addTab("HTML",htmlScrollPane); //Додавати вкладку в панель tabbedPane з іменем "HTML" і компонентом з попереднього  пункту.
+        tabbedPane.addTab("HTML", htmlScrollPane); //Додавати вкладку в панель tabbedPane з іменем "HTML" і компонентом з попереднього  пункту.
         JScrollPane plainScrollPane = new JScrollPane(plainTextPane); // Створити новий локальный компонент JScrollPane на базі  plainTextPane
         tabbedPane.addTab("Текст", plainScrollPane); //Додавати вкладку в панель tabbedPane з іменем "Текст" і компонентом з попереднього  пункту.
         tabbedPane.setPreferredSize(new Dimension(300, 300));//Встановлюємо необхідний  розмір панелі tabbedPane.
         TabbedPaneChangeListener listener = new TabbedPaneChangeListener(this);
         tabbedPane.addChangeListener(listener); //для компоненту tabbedPane повинен додаватися слухач TabbedPaneChangeListener через метод addChangeListener
-        getContentPane().add(tabbedPane,BorderLayout.CENTER);
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
-////Метод  відповідає  за ініціалізацію графічного интерфейсу
-    public void initGui(){
+
+    ////Метод  відповідає  за ініціалізацію графічного интерфейсу
+    public void initGui() {
         initMenuBar();
         initEditor();
         pack();
@@ -98,35 +101,48 @@ public class View extends JFrame implements ActionListener {
 
     }
 
-    public boolean canUndo(){
+    public boolean canUndo() {
         return undoManager.canUndo();
     }
 
-    public boolean canRedo(){
+    public boolean canRedo() {
         return undoManager.canRedo();
     }
-//Метод скасовує останню дію. Реалізуй його за допомогою undoManager. Метод не повинен кидати виняток, логіруй їх.
-    public void  undo(){
+
+    //Метод скасовує останню дію. Реалізуй його за допомогою undoManager. Метод не повинен кидати виняток, логіруй їх.
+    public void undo() {
         try {
             undoManager.undo();
-        } catch (CannotUndoException e){
+        } catch (CannotUndoException e) {
             ExceptionHandler.log(e);
         }
     }
-//Метод повертає раніше скасовану дію.
-    public void redo(){
+
+    //Метод повертає раніше скасовану дію.
+    public void redo() {
         try {
             undoManager.redo();
-        } catch (CannotRedoException e){
+        } catch (CannotRedoException e) {
             ExceptionHandler.log(e);
         }
     }
-//Метод, який повинен скидати всі правки в менеджері undoManager.
-    public void  resetUndo(){
-      undoManager.discardAllEdits();
+
+    //Метод, який повинен скидати всі правки в менеджері undoManager.
+    public void resetUndo() {
+        undoManager.discardAllEdits();
     }
-//геттер до поля undoListener
+
+    //геттер до поля undoListener
     public UndoListener getUndoListener() {
         return undoListener;
+    }
+
+    //Метод  повинен повертати true, якщо вибрано вкладку, що відображає HTML у панелі вкладок
+    public boolean isHtmlTabSelected() {
+        if (tabbedPane.getSelectedIndex() == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
