@@ -2,8 +2,10 @@ package project;
 
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.HTMLWriter;
 import java.io.File;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 public class Controller {
 
@@ -43,6 +45,18 @@ public class Controller {
         } catch (Exception e){
             ExceptionHandler.log(e);
         }
+    }
+
+    //Метод повинен отримувати текст із документа з усіма html тегами
+    public String getPlainText(){
+        StringWriter stringWriter = new StringWriter();
+        try {
+            HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+            htmlEditorKit.write(stringWriter,document,0,document.getLength());
+        } catch (Exception e){
+            ExceptionHandler.log(e);
+        }
+        return stringWriter.toString();
     }
 
     public static void main(String[] args) {
