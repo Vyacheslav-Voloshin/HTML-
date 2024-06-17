@@ -145,4 +145,21 @@ public class View extends JFrame implements ActionListener {
             return false;
         }
     }
+
+    //метод selectHtmlTab(), який повинен вибирати вкладку html та скидати всі редагування.
+    public void  selectHtmlTab(){
+        tabbedPane.setSelectedIndex(0);
+        resetUndo();
+    }
+
+    // метод update(), який повинен встановлювати документ на панель редагування.
+    public void  update(){
+        htmlTextPane.setDocument(controller.getDocument());
+    }
+
+    // метод showAbout(), який повинен показувати діалогове вікно з інформацією про програму.
+    // Інформацію придумай сам, а ось тип повідомлення має бути JOptionPane.INFORMATION_MESSAGE.
+    public void showAbout(){
+        JOptionPane.showMessageDialog(this, "The best HTML editor ", "Version 1.0", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
