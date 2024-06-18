@@ -58,10 +58,6 @@ public class View extends JFrame implements ActionListener {
         controller.exit();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 
     //Метод  відповідає  за ініціалізацію меню
     public void initMenuBar() {
@@ -169,5 +165,35 @@ public class View extends JFrame implements ActionListener {
                 break;
         }
         resetUndo();
+    }
+//цей метод успадковується від інтерфейсу ActionListener та буде викликатись при виборі пунктів меню, у яких наше подання зазначено у вигляді слухача подій.
+    public void actionPerformed(ActionEvent actionEvent){
+          String command = actionEvent.getActionCommand();
+          switch (command){
+              case ("Новий"):{
+                  controller.createNewDocument();
+                  break;
+              }
+              case ("Відкрити"):{
+                  controller.openDocument();
+                  break;
+              }
+              case ("Зберегти"):{
+                  controller.saveDocument();
+                  break;
+              }
+              case ("Зберегти як..."):{
+                  controller.saveDocumentAs();
+                  break;
+              }
+              case ("Вихід"):{
+                  controller.exit();
+                  break;
+              }
+              case ("Про програму"):{
+                  showAbout();
+                  break;
+              }
+          }
     }
 }
