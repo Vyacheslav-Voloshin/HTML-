@@ -68,9 +68,39 @@ public class Controller {
         view.setTitle("HTML редактор");
         currentFile = null;
     }
-    public void openDocument(){}
 
-    public void saveDocument(){}
+    //метод повинен відповідати за відкриття нового файлу
+    public void openDocument() {
+        view.selectHtmlTab(); //Вибираємо html вкладку у вистави.
+        JFileChooser jFileChooser = new JFileChooser(); //створюємо новий об'єкт для вибору файлу JFileChooser
+        jFileChooser.setFileFilter(new HTMLFileFilter()); //встановлювати об'єкту класу JFileChooser як фільтр об'єкт HTMLFileFilter
+        if (jFileChooser.showSaveDialog(view) == JFileChooser.APPROVE_OPTION) { ////Якщо користувач підтвердить вибір файлу:
+            currentFile = jFileChooser.getSelectedFile(); //Зберігаємо вибраний файл у полі currentFile.
+            resetDocument(); //метод resetDocument(), який скидатиме поточний документ.
+            view.setTitle(currentFile.getName()); //Встановлюваємо ім'я файлу як заголовок вікна представлення.
+            try (FileReader fileReader = new FileReader(currentFile)){
+                new HTMLEditorKit().read(fileReader,document,0); ///Переписуємо дані з об'єкта FileReade-а в document
+            } catch (IOException|BadLocationException e) {
+                ExceptionHandler.log(e);
+            }
+            view.resetUndo(); //Скинути правки (викликати метод resetUndo подання).
+        }
+
+    }
+
+    //Метод должен работать также, как saveDocumentAs(), но не запрашивать файл у пользователя, а использовать currentFile.
+    public void saveDocument(){
+       view.selectHtmlTab(); //Вибираємо html вкладку у вистави.
+       if (currentFile!=null){
+           try (FileWriter fileWriter = new FileWriter(currentFile)){ //Створюємо FileWriter з урахуванням currentFile.
+               new HTMLEditorKit().write(fileWriter,document,0,document.getLength()); //Переписуємо дані з документа в об'єкт FileWriter-а аналогічно тому, як ми це робили в методі getPlainText()
+           } catch (IOException | BadLocationException e) {
+               ExceptionHandler.log(e);
+           }
+       } else {
+           saveDocumentAs();
+       }
+    }
 
     //метод для збереження файлу під новим ім'ям
     public void saveDocumentAs(){
