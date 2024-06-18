@@ -91,7 +91,7 @@ public class MenuHelper {
         alignMenu.addMenuListener(new TextEditMenuListener(view));
     }
 
-//іниціалізація меню вибоуа стилю тексту.
+//іниціалізація меню вибору стилю тексту.
     public static void initStyleMenu(View view, JMenuBar menuBar){
         JMenu styleMenu = new JMenu("Стиль");
         menuBar.add(styleMenu);

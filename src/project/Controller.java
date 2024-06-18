@@ -17,7 +17,9 @@ public class Controller {
         this.view = view;
     }
 
-    public void init(){}
+    public void init(){
+        createNewDocument();
+    }
 
     public void exit(){
         System.exit(0);
@@ -58,6 +60,17 @@ public class Controller {
         }
         return stringWriter.toString();
     }
+
+    //метод створення нового документа
+    public void createNewDocument(){
+        view.selectHtmlTab();//Вибирати html вкладку у вистави.
+        resetDocument(); // метод resetDocument(), який скидатиме поточний документ.
+        view.setTitle("HTML редактор");
+        currentFile = null;
+    }
+    public void openDocument(){}
+    public void saveDocument(){}
+    public void saveDocumentAs(){}
 
     public static void main(String[] args) {
       View view = new View();
