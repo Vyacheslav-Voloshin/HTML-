@@ -97,10 +97,6 @@ public class View extends JFrame implements ActionListener {
         pack();
     }
 
-    public void selectedTabChanged() {
-
-    }
-
     public boolean canUndo() {
         return undoManager.canUndo();
     }
@@ -160,5 +156,18 @@ public class View extends JFrame implements ActionListener {
     // метод showAbout(), який повинен показувати діалогове вікно з інформацією про програму.
     public void showAbout(){
         JOptionPane.showMessageDialog(this, "The best HTML editor ", "Version 1.0", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    //метод викликається, коли відбулася зміна вибраної вкладки
+    public void selectedTabChanged(){
+        switch (tabbedPane.getSelectedIndex()) {
+            case 0:
+                controller.setPlainText(plainTextPane.getText());
+                break;
+            case 1:
+                plainTextPane.setText(controller.getPlainText());
+                break;
+        }
+        resetUndo();
     }
 }
